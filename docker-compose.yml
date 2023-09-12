@@ -1,0 +1,43 @@
+version: '3.9'
+services:
+
+ elasticsearch: 
+
+    image: elasticsearch:7.10.1
+    container_name: elasticsearch
+    environment:
+      discovery.type: single-node
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    
+ fastapi:
+    build: .
+    command: uvicorn app.main:api --reload --host 0.0.0.0
+    container_name: fastapi
+    volumes:
+      - .:/app
+    ports:
+      - "8008:8000"
+    depends_on:
+      - elasticsearch      
+    
+ peuplement:   
+    image: peupl:latest    
+    container_name: peuplement     
+    depends_on:
+      - elasticsearch          
+    
+   
+ 
+            
+    
+    
+      
+      
+       
+
+
+
+
+
